@@ -57,3 +57,6 @@ gem 'devise'
 # simlpe_form과 bootstrap 설치
 gem 'bootstrap-sass'
 gem 'simple_form'
+
+#mailgun 사용
+gem 'mailgun_rails' 

@@ -27,11 +27,20 @@ Rails.application.configure do
   end
 
   # Don't care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.raise_delivery_errors = false  # false를 트루로 ?
 
-  config.action_mailer.perform_caching = false
+  config.action_mailer.perform_caching = false   # false를 트루로 ?
 
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }  # Devise가 시키니 일단 넣는다
+
+  # mailgun 잼 설치후 내용 입력
+  config.action_mailer.delivery_method = :mailgun
+  config.action_mailer.mailgun_settings = {
+          api_key: 'key-2d1095c2c8367cf24c3874afa5bd6d2f',
+          domain: 'https://api.mailgun.net/v3/sandbox25d233a99c8a4e09bf0e037a37bc2885.mailgun.org' #이게 맞나? 
+  }
+
+
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
