@@ -4,7 +4,9 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
          :confirmable,  # 메일 인증 confirmable 설정
-         :omniauthable # omniauth 내용 추가
+         :omniauthable  # omniauth 내용 추가
+
+  has_many :identities, dependent: :destroy
 
   # omniauth로 추가한 내용 http://sourcey.com/rails-4-omniauth-using-devise-with-twitter-facebook-and-linkedin/
   TEMP_EMAIL_PREFIX = 'change@me'
