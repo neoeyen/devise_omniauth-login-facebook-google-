@@ -3,7 +3,7 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
-         :confirmable  # 메일 인증 confirmable 설정
+         :confirmable,  # 메일 인증 confirmable 설정
          :omniauthable # omniauth 내용 추가
 
   # omniauth로 추가한 내용 http://sourcey.com/rails-4-omniauth-using-devise-with-twitter-facebook-and-linkedin/
