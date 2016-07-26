@@ -49,8 +49,8 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # Devise, OmniAutho gem(페이스북, 구글, 인스타그램) - https://github.com/hcn1519/omniauth_devise_configuration, Devise 잼 파해치기 깃북 참고
 gem 'devise'
-#gem 'omniauth'
-#gem 'omniauth-facebook'
+gem 'omniauth'
+gem 'omniauth-facebook'
 #gem "omniauth-google-oauth2"
 #gem 'omniauth-instagram'
 
@@ -59,4 +59,4 @@ gem 'bootstrap-sass'
 gem 'simple_form'
 
 #mailgun 사용
-gem 'mailgun_rails' 
+gem 'mailgun_rails'

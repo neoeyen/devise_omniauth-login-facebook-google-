@@ -4,8 +4,8 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.0]
       ## Database authenticatable
       t.string :email,              null: false, default: ""
       t.string :encrypted_password, null: false, default: ""
-      t.string :name #필요 컬럼 추가
-      t.string :image #필요 컬럼 추가
+      #t.string :name #필요 컬럼 추가  - 따로 마이크레이션 파일로 추가
+      #t.string :image #필요 컬럼 추가 - 따로 마이크레이션 파일로 추가
 
       ## Recoverable
       t.string   :reset_password_token
