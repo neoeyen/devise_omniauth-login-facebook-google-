@@ -1,22 +1,18 @@
-<div id="add-email" class="container">
-  <h2>Add Email</h2>
-  <%= form_for(current_user, :as => 'user', :url => finish_signup_path(current_user), :html => { role: 'form'}) do |f| %>
-    <% if @show_errors && current_user.errors.any? %>
-      <div id="error_explanation">
-        <% current_user.errors.full_messages.each do |msg| %>
-          <%= msg %><br>
-        <% end %>
-      </div>
-    <% end %>
-    <div class="form-group">
-      <%= f.label :email %>
-      <div class="controls">
-        <%= f.text_field :email, :autofocus => true, :value => '', class: 'form-control input-lg', placeholder: 'Example: email@me.com' %>
-        <p class="help-block">Please confirm your email address. No spam.</p>
-      </div>
-    </div>
-    <div class="actions">
-      <%= f.submit 'Continue', :class => 'btn btn-default' %>
-    </div>
-  <% end %>
-</div>
+<h2>Finish Signup</h2>
+
+<%= simple_form_for(current_user, :as => 'user', :url => finish_signup_path(current_user), :html => { role: 'form'}) do |f| %>
+
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :email, required: true, autofocus: true %>
+    <%= f.input :name, required: true %>
+    <%= f.input :image, required: false %>
+    <%= f.input :password, required: true, hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length) %>
+    <%= f.input :password_confirmation, required: true %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit, "Create Account" %>
+  </div>
+<% end %>
