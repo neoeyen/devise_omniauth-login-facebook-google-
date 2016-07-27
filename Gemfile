@@ -51,7 +51,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'devise'
 gem 'omniauth'
 gem 'omniauth-facebook'
-#gem "omniauth-google-oauth2"
+gem "omniauth-google-oauth2"
 #gem 'omniauth-instagram'
 
 # simlpe_form과 bootstrap 설치
