@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
+  # before_action :configure_devise_permitted_parameters, if: :devise_controller?
 
 # 깃북 내용
   def ensure_signup_complete
@@ -12,4 +13,22 @@ class ApplicationController < ActionController::Base
      redirect_to finish_signup_path(current_user)
    end
   end
+
+  # protected 메소드는 위 주석의 configure_devise_permitted_parameters 정의 - 오류뜸 ㅠㅠ
+  protected
+
+  def configure_devise_permitted_parameters
+      permitted_params = [:email, :password, :password_confirmation, :name, :image]
+
+      if params[:action] == 'update'
+        devise_parameter_sanitizer.for(:account_update) {
+          |u| u.permit(permitted_params << :current_password)
+        }
+      elsif params[:action] == 'create'
+        devise_parameter_sanitizer.for(:sign_up) {
+          |u| u.permit(permitted_params)
+        }
+      end
+  end
+
 end
