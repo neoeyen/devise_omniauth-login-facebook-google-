@@ -50,11 +50,10 @@ class User::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def after_sign_in_path_for(resource)
-    if resource.password_reset?
-      super resource
-    else
+    if resource.require_password_reset?
       finish_signup_path(resource)
+    else
+      super resource
     end
   end
-
 end

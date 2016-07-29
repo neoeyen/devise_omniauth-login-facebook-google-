@@ -14,8 +14,11 @@ class User < ApplicationRecord
   # TEMP_EMAIL_PREFIX = 'change@me'
   # TEMP_EMAIL_REGEX = /\Achange@me/
   # validates_presence_of :name
-  # validates_format_of :email, :without => TEMP_EMAIL_REGEX, on: :update
-  TEMP_PASSWORD_PREFIX = 'change_password'
+
+  TEMP_EMAIL_PASSWORD_PREFIX = 'require_change_password'
+  # TEMP_EMAIL_REGEX = /\Arequire_change_password_/
+  # validates_format_of :email, :without => TEMP_EMAIL_REGEX, on: :update  -- 이건 업데이트 할때 해당 텍스트가 없어야 한다는 말임
+
 
   def self.find_for_oauth(auth, signed_in_resource = nil)
 
@@ -46,10 +49,11 @@ class User < ApplicationRecord
         # Create the user if it's a new registration
         if user.nil?
           user = User.new(
-            name: auth.info.name, # auth.extra.raw_info.name,
-            image: auth.info.image ? auth.info.image : "#{options[:secure_image_url] ? 'https' : 'http'}://graph.facebook.com/#{uid}/picture?type=square", # 다른 SNS 적용 가능한지 확인 필요
-            email: auth.info.email, # email ? email : "#{TEMP_EMAIL_PREFIX}-#{auth.uid}-#{auth.provider}.com",
-            password: TEMP_PASSWORD_PREFIX #Devise.friendly_token[0,20]
+            email: auth.info.email,
+            # email: "#{auth.info.email}_#{TEMP_EMAIL_PASSWORD_PREFIX}",
+            name: "#{auth.info.name||auth.extra.nickname}_#{TEMP_EMAIL_PASSWORD_PREFIX}",
+            image: auth.info.image || "#{options[:secure_image_url] ? 'https' : 'http'}://graph.facebook.com/#{uid}/picture?type=normal",
+            password: Devise.friendly_token[0,20]
           )
           user.skip_confirmation!
           user.save!
@@ -66,17 +70,19 @@ class User < ApplicationRecord
     user
   end
 
-  def password_reset?
-   self.password != TEMP_PASSWORD_PREFIX  # 보안상 괜찮은건가? 아닐 듯~ ㅠㅠ
+  def require_password_reset?
+   # self.password == TEMP_PASSWORD_PREFIX  # true 이면 재설정 해야함 -- 재정의 해서 보안문제 해결 필요함
+   # self.email && self.email !~ TEMP_EMAIL_REGEX
+   self.name.include? TEMP_EMAIL_PASSWORD_PREFIX
   end
 
   # 아래 두개의 이메일 메소드는 왜 있는지? - 깃허브 소스
-  def email_required?
-    false
-  end
+  # def email_required?
+  #  false
+  # end
 
-  def email_changed?
-    false
-  end
+  # def email_changed?
+  #  false
+  # end
 
 end
